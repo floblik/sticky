@@ -33,7 +33,9 @@
       center: false,
       getWidthFrom: '',
       widthFromWrapper: true, // works only when .getWidthFrom is empty
-      responsiveWidth: false
+      responsiveWidth: false,
+	  stickBetweenTo: "",
+	  stickBetweenTopMargin: ""
     },
     $window = $(window),
     $document = $(document),
@@ -50,8 +52,8 @@
           elementTop = s.stickyWrapper.offset().top,
           etse = elementTop - s.topSpacing - extra;
 
-	//update height in case of dynamic content
-	s.stickyWrapper.css('height', s.stickyElement.outerHeight());
+		//update height in case of dynamic content
+		s.stickyWrapper.css('height', s.stickyElement.outerHeight());
 
         if (scrollTop <= etse) {
           if (s.currentTop !== null) {
@@ -108,7 +110,14 @@
 
             s.currentTop = newTop;
           }
-        }
+        }	
+		if (s.stickBetweenTo.offset().top - s.stickyElement.outerHeight() <= scrollTop) {
+			s.stickyElement.css("top", s.stickBetweenTopMargin);
+			s.stickyElement.css("position", "relative");
+		} else if (s.stickyElement.css("position") == "relative") {
+			s.stickyElement.css("position", "fixed");
+			s.stickyElement.css("top", newTop);
+		}
       }
     },
     resizer = function() {
@@ -153,12 +162,13 @@
           if (stickyElement.css("float") === "right") {
             stickyElement.css({"float":"none"}).parent().css({"float":"right"});
           }
-
+			
           stickyWrapper.css('height', stickyHeight);
-
-          o.stickyElement = stickyElement;
-          o.stickyWrapper = stickyWrapper;
-          o.currentTop    = null;
+ 
+          o.stickyElement 			= stickyElement;
+          o.stickyWrapper			= stickyWrapper;
+          o.currentTop    			= null;
+          o.stickBetweenTopMargin   = o.stickBetweenTo.offset().top - stickyElement.outerHeight() - stickyElement.offset().top;
 
           sticked.push(o);
         });
