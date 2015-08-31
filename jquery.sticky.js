@@ -34,8 +34,8 @@
       getWidthFrom: '',
       widthFromWrapper: true, // works only when .getWidthFrom is empty
       responsiveWidth: false,
-	  stickBetweenTo: "",
-	  stickBetweenTopMargin: ""
+	  stickBottomElement: "",
+	  stickBottomElementMargin: "" //computed in runtime, but needs initialization
     },
     $window = $(window),
     $document = $(document),
@@ -111,9 +111,12 @@
             s.currentTop = newTop;
           }
         }
-		if (s.stickBetweenTo != "") {
-			if (s.stickBetweenTo.offset().top - s.stickyElement.outerHeight() <= scrollTop) {
-				s.stickyElement.css("top", s.stickBetweenTopMargin);
+		if (s.stickBottomElement != "") {
+			if (s.stickBottomElementMargin == "") {
+				s.stickBottomElementMargin = s.stickBottomElement.position().top - s.stickyElement.outerHeight() - s.stickyElement.position().top - 80;
+			}
+			if (s.stickBottomElement.offset().top - s.stickyElement.outerHeight() <= scrollTop) {
+				s.stickyElement.css("top", s.stickBottomElementMargin);
 				s.stickyElement.css("position", "relative");
 			} else if (s.stickyElement.css("position") == "relative") {
 				s.stickyElement.css("position", "fixed");
@@ -167,16 +170,9 @@
 			
           stickyWrapper.css('height', stickyHeight);
 		  
-		  if (o.stickBetweenTo != "") {
-			stickBetweenTopMargin   = o.stickBetweenTo.offset().top - stickyElement.outerHeight() - stickyElement.offset().top;
-		  } else {
-			  stickBetweenTopMargin = null;
-		  }
-		  
           o.stickyElement 			= stickyElement;
           o.stickyWrapper			= stickyWrapper;
           o.currentTop    			= null;
-          o.stickBetweenTopMargin   = stickBetweenTopMargin;
 
           sticked.push(o);
         });
