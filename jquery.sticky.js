@@ -110,13 +110,15 @@
 
             s.currentTop = newTop;
           }
-        }	
-		if (s.stickBetweenTo.offset().top - s.stickyElement.outerHeight() <= scrollTop) {
-			s.stickyElement.css("top", s.stickBetweenTopMargin);
-			s.stickyElement.css("position", "relative");
-		} else if (s.stickyElement.css("position") == "relative") {
-			s.stickyElement.css("position", "fixed");
-			s.stickyElement.css("top", newTop);
+        }
+		if (s.stickBetweenTo != "") {
+			if (s.stickBetweenTo.offset().top - s.stickyElement.outerHeight() <= scrollTop) {
+				s.stickyElement.css("top", s.stickBetweenTopMargin);
+				s.stickyElement.css("position", "relative");
+			} else if (s.stickyElement.css("position") == "relative") {
+				s.stickyElement.css("position", "fixed");
+				s.stickyElement.css("top", newTop);
+			}
 		}
       }
     },
@@ -164,11 +166,17 @@
           }
 			
           stickyWrapper.css('height', stickyHeight);
- 
+		  
+		  if (o.stickBetweenTo != "") {
+			stickBetweenTopMargin   = o.stickBetweenTo.offset().top - stickyElement.outerHeight() - stickyElement.offset().top;
+		  } else {
+			  stickBetweenTopMargin = null;
+		  }
+		  
           o.stickyElement 			= stickyElement;
           o.stickyWrapper			= stickyWrapper;
           o.currentTop    			= null;
-          o.stickBetweenTopMargin   = o.stickBetweenTo.offset().top - stickyElement.outerHeight() - stickyElement.offset().top;
+          o.stickBetweenTopMargin   = stickBetweenTopMargin;
 
           sticked.push(o);
         });
