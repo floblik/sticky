@@ -113,7 +113,7 @@
         }
 		if (s.stickBottomElement != "") {
 			if (s.stickBottomElementMargin == "") {
-				s.stickBottomElementMargin = s.stickBottomElement.position().top - s.stickyElement.outerHeight() - s.stickyElement.position().top;
+				s.stickBottomElementMargin = s.stickBottomElement.position().top - s.stickyElement.outerHeight() - s.stickyElement.position().top - elementTop;
 			}
 			if (s.stickBottomElement.offset().top - s.stickyElement.outerHeight() <= scrollTop) {
 				s.stickyElement.css("top", s.stickBottomElementMargin);
