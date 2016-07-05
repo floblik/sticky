@@ -107,12 +107,13 @@
               // sticky is started && sticked at topSpacing && overflowing from top just finished
               s.stickyElement.trigger('sticky-bottom-unreached', [s]);
             }
-
+			
             s.currentTop = newTop;
           }
         }
+		
 		if (s.stickBottomElement != "") {
-			if (s.stickBottomElementMargin == "") {
+			if (s.stickBottomElementMargin == "") { 
 				s.stickBottomElementMargin = s.stickBottomElement.position().top - s.stickyElement.outerHeight() - s.stickyElement.position().top - elementTop;
 			}
 			if (s.stickBottomElement.offset().top - s.stickyElement.outerHeight() <= scrollTop) {
@@ -235,6 +236,6 @@
     }
   };
   $(function() {
-    setTimeout(scroller, 0);
+    setTimeout(scroller, 1000);
   });
 }));
